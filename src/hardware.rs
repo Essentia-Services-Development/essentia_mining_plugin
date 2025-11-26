@@ -3,27 +3,27 @@
 //! This module integrates with `essentia_hwdetect` to determine optimal
 //! mining parameters based on available hardware capabilities.
 
-use crate::errors::{MiningError, MiningResult};
+use crate::errors::MiningResult;
 
 /// Hardware profile for mining optimization.
 #[derive(Debug, Clone)]
 pub struct MiningHardwareProfile {
     /// Number of physical CPU cores.
-    pub physical_cores: usize,
+    pub physical_cores:     usize,
     /// Number of logical CPU cores (with hyperthreading).
-    pub logical_cores: usize,
+    pub logical_cores:      usize,
     /// Available system memory in bytes.
-    pub available_memory: u64,
+    pub available_memory:   u64,
     /// CPU supports SHA extensions.
     pub has_sha_extensions: bool,
     /// CPU supports AVX2.
-    pub has_avx2: bool,
+    pub has_avx2:           bool,
     /// GPU available for mining.
-    pub gpu_available: bool,
+    pub gpu_available:      bool,
     /// GPU compute capability (if available).
-    pub gpu_compute_units: Option<u32>,
+    pub gpu_compute_units:  Option<u32>,
     /// Performance tier (1-5, 5 being highest).
-    pub performance_tier: u8,
+    pub performance_tier:   u8,
 }
 
 impl MiningHardwareProfile {
@@ -110,10 +110,10 @@ fn detect_cpu_cores() -> usize {
     #[cfg(target_os = "windows")]
     {
         // Try to get from environment
-        if let Ok(val) = std::env::var("NUMBER_OF_PROCESSORS") {
-            if let Ok(n) = val.parse::<usize>() {
-                return n;
-            }
+        if let Ok(val) = std::env::var("NUMBER_OF_PROCESSORS")
+            && let Ok(n) = val.parse::<usize>()
+        {
+            return n;
         }
     }
 
@@ -131,14 +131,14 @@ fn detect_available_memory() -> u64 {
 impl Default for MiningHardwareProfile {
     fn default() -> Self {
         Self::detect().unwrap_or(Self {
-            physical_cores: 2,
-            logical_cores: 4,
-            available_memory: 4 * 1024 * 1024 * 1024,
+            physical_cores:     2,
+            logical_cores:      4,
+            available_memory:   4 * 1024 * 1024 * 1024,
             has_sha_extensions: false,
-            has_avx2: false,
-            gpu_available: false,
-            gpu_compute_units: None,
-            performance_tier: 2,
+            has_avx2:           false,
+            gpu_available:      false,
+            gpu_compute_units:  None,
+            performance_tier:   2,
         })
     }
 }
@@ -155,11 +155,8 @@ mod tests {
 
     #[test]
     fn test_recommended_threads() {
-        let profile = MiningHardwareProfile {
-            physical_cores: 8,
-            logical_cores: 16,
-            ..Default::default()
-        };
+        let profile =
+            MiningHardwareProfile { physical_cores: 8, logical_cores: 16, ..Default::default() };
 
         assert_eq!(profile.recommended_threads(50), 4);
         assert_eq!(profile.recommended_threads(25), 2);

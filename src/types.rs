@@ -4,17 +4,17 @@
 #[derive(Debug, Clone, Default)]
 pub struct MiningStats {
     /// Total hashes computed.
-    pub total_hashes: u64,
+    pub total_hashes:            u64,
     /// Hashes per second.
-    pub hashrate: f64,
+    pub hashrate:                f64,
     /// Number of valid shares found.
-    pub shares_found: u64,
+    pub shares_found:            u64,
     /// Number of shares accepted by pool.
-    pub shares_accepted: u64,
+    pub shares_accepted:         u64,
     /// Number of shares rejected by pool.
-    pub shares_rejected: u64,
+    pub shares_rejected:         u64,
     /// Current difficulty.
-    pub difficulty: f64,
+    pub difficulty:              f64,
     /// Estimated time to find block (seconds).
     pub estimated_time_to_block: Option<f64>,
 }
@@ -23,17 +23,17 @@ pub struct MiningStats {
 #[derive(Debug, Clone)]
 pub struct BlockHeader {
     /// Block version.
-    pub version: u32,
+    pub version:         u32,
     /// Previous block hash (32 bytes).
     pub prev_block_hash: [u8; 32],
     /// Merkle root (32 bytes).
-    pub merkle_root: [u8; 32],
+    pub merkle_root:     [u8; 32],
     /// Block timestamp.
-    pub timestamp: u32,
+    pub timestamp:       u32,
     /// Target difficulty bits.
-    pub bits: u32,
+    pub bits:            u32,
     /// Nonce being mined.
-    pub nonce: u32,
+    pub nonce:           u32,
 }
 
 impl BlockHeader {
@@ -64,7 +64,7 @@ impl HashTarget {
         let exponent = ((bits >> 24) & 0xFF) as usize;
         let mantissa = bits & 0x00FFFFFF;
 
-        if exponent >= 3 && exponent <= 32 {
+        if (3..=32).contains(&exponent) {
             let start = 32 - exponent;
             target[start] = ((mantissa >> 16) & 0xFF) as u8;
             if start + 1 < 32 {
@@ -80,11 +80,11 @@ impl HashTarget {
 
     /// Check if hash meets target (hash <= target).
     pub fn is_valid_hash(&self, hash: &[u8; 32]) -> bool {
-        for i in 0..32 {
-            if hash[i] < self.target[i] {
+        for (i, hash_byte) in hash.iter().enumerate() {
+            if *hash_byte < self.target[i] {
                 return true;
             }
-            if hash[i] > self.target[i] {
+            if *hash_byte > self.target[i] {
                 return false;
             }
         }
@@ -108,21 +108,22 @@ impl Nonce {
 #[derive(Debug, Clone)]
 pub struct MiningJob {
     /// Job identifier.
-    pub job_id: String,
+    pub job_id:           String,
     /// Block header template.
-    pub header: BlockHeader,
+    pub header:           BlockHeader,
     /// Target for this job.
-    pub target: HashTarget,
+    pub target:           HashTarget,
     /// Extra nonce 1 (from pool).
-    pub extranonce1: Vec<u8>,
+    pub extranonce1:      Vec<u8>,
     /// Extra nonce 2 size.
     pub extranonce2_size: usize,
 }
 
 /// Pool connection state.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub enum PoolConnection {
     /// Not connected.
+    #[default]
     Disconnected,
     /// Connecting to pool.
     Connecting { url: String },
@@ -130,10 +131,4 @@ pub enum PoolConnection {
     Connected { url: String, worker: String },
     /// Connection error.
     Error { url: String, reason: String },
-}
-
-impl Default for PoolConnection {
-    fn default() -> Self {
-        Self::Disconnected
-    }
 }

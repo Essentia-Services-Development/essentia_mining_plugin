@@ -29,10 +29,14 @@
 //!
 //! ## Features
 //!
-//! - **Hardware Detection**: Leverages `essentia_hwdetect` for CPU/GPU capability detection
-//! - **Background Processing**: Uses `essentia_async_runtime` for non-blocking mining
-//! - **Resource Management**: Integrates with `essentia_resource_management` for CPU throttling
-//! - **Pool Support**: Stratum protocol implementation for mining pool integration
+//! - **Hardware Detection**: Leverages `essentia_hwdetect` for CPU/GPU
+//!   capability detection
+//! - **Background Processing**: Uses `essentia_async_runtime` for non-blocking
+//!   mining
+//! - **Resource Management**: Integrates with `essentia_resource_management`
+//!   for CPU throttling
+//! - **Pool Support**: Stratum protocol implementation for mining pool
+//!   integration
 //! - **SHA-256 Implementation**: Pure Rust SHA-256 for Proof-of-Work validation
 //!
 //! ## Usage
@@ -48,24 +52,22 @@
 //! plugin.start_background_mining()?;
 //! ```
 
-mod types;
-mod errors;
 mod config;
-mod hardware;
-mod sha256;
 mod coordinator;
-mod stratum;
+mod errors;
+mod hardware;
 mod plugin;
+mod sha256;
+mod stratum;
+mod types;
 
-pub use types::{
-    MiningStats, BlockHeader, HashTarget, Nonce, MiningJob, PoolConnection,
-};
-pub use errors::{MiningError, MiningResult};
 pub use config::MiningConfig;
-pub use hardware::MiningHardwareProfile;
 pub use coordinator::MiningCoordinator;
-pub use stratum::StratumClient;
+pub use errors::{MiningError, MiningResult};
+pub use hardware::MiningHardwareProfile;
 pub use plugin::MiningPlugin;
+pub use stratum::{StratumClient, parse_stratum_url};
+pub use types::{BlockHeader, HashTarget, MiningJob, MiningStats, Nonce, PoolConnection};
 
 #[cfg(test)]
 mod tests {

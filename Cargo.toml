@@ -6,6 +6,7 @@ authors = ["Essentia Services Development <dev@essentia.services>"]
 description = "Bitcoin/cryptocurrency mining plugin with hardware detection and background processing"
 license = "MIT"
 repository = "https://github.com/Essentia-Services-Development/essentia_mining_plugin"
+readme = "README.md"
 keywords = ["essentia", "mining", "bitcoin", "cryptocurrency", "plugin"]
 categories = ["cryptography", "asynchronous"]
 
@@ -14,7 +15,7 @@ essentia_core = { path = "../../core/essentia_core" }
 essentia_traits = { path = "../../core/essentia_traits" }
 essentia_hwdetect = { path = "../../core/essentia_hwdetect" }
 essentia_async_runtime = { path = "../../core/essentia_async_runtime" }
-essentia_resource_management = { path = "../../core/essentia_resource_management" }
+essentia_resource_management = { path = "../../services/essentia_resource_management" }
 essentia_plugin_system = { path = "../../core/essentia_plugin_system" }
 
 [dev-dependencies]

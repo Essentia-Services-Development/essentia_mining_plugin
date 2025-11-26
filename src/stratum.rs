@@ -2,15 +2,17 @@
 //!
 //! Implements the Stratum mining protocol for connecting to mining pools.
 
-use crate::errors::{MiningError, MiningResult};
-use crate::types::{MiningJob, PoolConnection};
+use crate::{
+    errors::{MiningError, MiningResult},
+    types::{MiningJob, PoolConnection},
+};
 
 /// Stratum protocol client.
 pub struct StratumClient {
-    pool_url: String,
-    worker_name: String,
+    pool_url:         String,
+    worker_name:      String,
     connection_state: PoolConnection,
-    extranonce1: Vec<u8>,
+    extranonce1:      Vec<u8>,
     extranonce2_size: usize,
 }
 
@@ -18,10 +20,10 @@ impl StratumClient {
     /// Create a new Stratum client.
     pub fn new(pool_url: impl Into<String>, worker_name: impl Into<String>) -> Self {
         Self {
-            pool_url: pool_url.into(),
-            worker_name: worker_name.into(),
+            pool_url:         pool_url.into(),
+            worker_name:      worker_name.into(),
             connection_state: PoolConnection::Disconnected,
-            extranonce1: Vec::new(),
+            extranonce1:      Vec::new(),
             extranonce2_size: 4,
         }
     }
@@ -32,9 +34,7 @@ impl StratumClient {
     ///
     /// Returns `MiningError::PoolConnection` if connection fails.
     pub fn connect(&mut self) -> MiningResult<()> {
-        self.connection_state = PoolConnection::Connecting {
-            url: self.pool_url.clone(),
-        };
+        self.connection_state = PoolConnection::Connecting { url: self.pool_url.clone() };
 
         // In production, this would:
         // 1. Parse pool URL (stratum+tcp://host:port)
@@ -46,7 +46,7 @@ impl StratumClient {
         // The actual networking would use essentia_net_plugin
 
         self.connection_state = PoolConnection::Connected {
-            url: self.pool_url.clone(),
+            url:    self.pool_url.clone(),
             worker: self.worker_name.clone(),
         };
 
@@ -88,11 +88,7 @@ impl StratumClient {
     ///
     /// Returns `MiningError::StratumProtocol` if submission fails.
     pub fn submit_share(
-        &self,
-        job_id: &str,
-        extranonce2: &[u8],
-        ntime: u32,
-        nonce: u32,
+        &self, job_id: &str, extranonce2: &[u8], ntime: u32, nonce: u32,
     ) -> MiningResult<bool> {
         if !self.is_connected() {
             return Err(MiningError::PoolConnection("Not connected to pool".into()));
@@ -133,7 +129,9 @@ pub fn parse_stratum_url(url: &str) -> MiningResult<(String, u16)> {
 
     let parts: Vec<&str> = stripped.split(':').collect();
     if parts.len() != 2 {
-        return Err(MiningError::Configuration("Invalid stratum URL format".into()));
+        return Err(MiningError::Configuration(
+            "Invalid stratum URL format".into(),
+        ));
     }
 
     let host = parts[0].to_string();

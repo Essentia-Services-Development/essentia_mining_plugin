@@ -1,19 +1,23 @@
 //! Mining coordinator for managing mining threads.
 
-use crate::config::MiningConfig;
-use crate::errors::{MiningError, MiningResult};
-use crate::hardware::MiningHardwareProfile;
-use crate::sha256::double_sha256;
-use crate::types::{BlockHeader, HashTarget, MiningJob, MiningStats};
+use std::sync::{
+    Arc,
+    atomic::{AtomicBool, AtomicU64, Ordering},
+};
 
-use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
-use std::sync::Arc;
+use crate::{
+    config::MiningConfig,
+    errors::{MiningError, MiningResult},
+    hardware::MiningHardwareProfile,
+    sha256::double_sha256,
+    types::{BlockHeader, HashTarget, MiningJob, MiningStats},
+};
 
 /// Mining coordinator that manages background mining threads.
 pub struct MiningCoordinator {
-    config: MiningConfig,
-    hardware: MiningHardwareProfile,
-    running: Arc<AtomicBool>,
+    config:       MiningConfig,
+    hardware:     MiningHardwareProfile,
+    running:      Arc<AtomicBool>,
     total_hashes: Arc<AtomicU64>,
     shares_found: Arc<AtomicU64>,
 }
@@ -29,7 +33,7 @@ impl MiningCoordinator {
 
         if !hardware.is_suitable_for_mining() {
             return Err(MiningError::HardwareDetection(
-                "Hardware does not meet minimum requirements for mining".into()
+                "Hardware does not meet minimum requirements for mining".into(),
             ));
         }
 
@@ -108,13 +112,8 @@ impl MiningCoordinator {
 
     /// Mining thread function.
     fn mining_thread(
-        running: Arc<AtomicBool>,
-        total_hashes: Arc<AtomicU64>,
-        shares_found: Arc<AtomicU64>,
-        mut header: BlockHeader,
-        target: HashTarget,
-        start_nonce: u32,
-        end_nonce: u32,
+        running: Arc<AtomicBool>, total_hashes: Arc<AtomicU64>, shares_found: Arc<AtomicU64>,
+        mut header: BlockHeader, target: HashTarget, start_nonce: u32, end_nonce: u32,
     ) {
         let mut nonce = start_nonce;
         let mut batch_count = 0u64;

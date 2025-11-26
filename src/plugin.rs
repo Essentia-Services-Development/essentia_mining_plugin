@@ -1,17 +1,19 @@
 //! Mining plugin implementation.
 
-use crate::config::MiningConfig;
-use crate::coordinator::MiningCoordinator;
-use crate::errors::{MiningError, MiningResult};
-use crate::hardware::MiningHardwareProfile;
-use crate::stratum::StratumClient;
-use crate::types::{MiningStats, PoolConnection};
+use crate::{
+    config::MiningConfig,
+    coordinator::MiningCoordinator,
+    errors::{MiningError, MiningResult},
+    hardware::MiningHardwareProfile,
+    stratum::StratumClient,
+    types::{MiningStats, PoolConnection},
+};
 
 /// Main mining plugin interface.
 pub struct MiningPlugin {
-    config: MiningConfig,
-    coordinator: Option<MiningCoordinator>,
-    stratum_client: Option<StratumClient>,
+    config:           MiningConfig,
+    coordinator:      Option<MiningCoordinator>,
+    stratum_client:   Option<StratumClient>,
     hardware_profile: MiningHardwareProfile,
 }
 
@@ -28,16 +30,11 @@ impl MiningPlugin {
         // Validate configuration
         if config.max_cpu_percentage == 0 || config.max_cpu_percentage > 100 {
             return Err(MiningError::Configuration(
-                "CPU percentage must be between 1 and 100".into()
+                "CPU percentage must be between 1 and 100".into(),
             ));
         }
 
-        Ok(Self {
-            config,
-            coordinator: None,
-            stratum_client: None,
-            hardware_profile,
-        })
+        Ok(Self { config, coordinator: None, stratum_client: None, hardware_profile })
     }
 
     /// Get hardware profile.
@@ -58,7 +55,7 @@ impl MiningPlugin {
     pub fn update_config(&mut self, config: MiningConfig) -> MiningResult<()> {
         if config.max_cpu_percentage == 0 || config.max_cpu_percentage > 100 {
             return Err(MiningError::Configuration(
-                "CPU percentage must be between 1 and 100".into()
+                "CPU percentage must be between 1 and 100".into(),
             ));
         }
         self.config = config;
@@ -72,7 +69,10 @@ impl MiningPlugin {
     /// Returns `MiningError::PoolConnection` if connection fails.
     /// Returns `MiningError::Configuration` if no pool URL is configured.
     pub fn connect_to_pool(&mut self) -> MiningResult<()> {
-        let pool_url = self.config.pool_url.clone()
+        let pool_url = self
+            .config
+            .pool_url
+            .clone()
             .ok_or_else(|| MiningError::Configuration("No pool URL configured".into()))?;
 
         let mut client = StratumClient::new(pool_url, &self.config.worker_name);
@@ -111,10 +111,10 @@ impl MiningPlugin {
         let coordinator = MiningCoordinator::new(self.config.clone())?;
 
         // Get job from pool or create test job
-        if let Some(ref client) = self.stratum_client {
-            if let Some(job) = client.get_job()? {
-                coordinator.start(job)?;
-            }
+        if let Some(ref client) = self.stratum_client
+            && let Some(job) = client.get_job()?
+        {
+            coordinator.start(job)?;
         }
 
         self.coordinator = Some(coordinator);
@@ -131,18 +131,12 @@ impl MiningPlugin {
 
     /// Check if mining is active.
     pub fn is_mining(&self) -> bool {
-        self.coordinator
-            .as_ref()
-            .map(|c| c.is_running())
-            .unwrap_or(false)
+        self.coordinator.as_ref().map(|c| c.is_running()).unwrap_or(false)
     }
 
     /// Get current mining statistics.
     pub fn stats(&self) -> MiningStats {
-        self.coordinator
-            .as_ref()
-            .map(|c| c.stats())
-            .unwrap_or_default()
+        self.coordinator.as_ref().map(|c| c.stats()).unwrap_or_default()
     }
 }
 
@@ -187,6 +181,9 @@ mod tests {
     #[test]
     fn test_pool_not_connected_initially() {
         let plugin = MiningPlugin::new(MiningConfig::default()).unwrap();
-        assert!(matches!(plugin.pool_connection_state(), PoolConnection::Disconnected));
+        assert!(matches!(
+            plugin.pool_connection_state(),
+            PoolConnection::Disconnected
+        ));
     }
 }

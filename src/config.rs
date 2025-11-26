@@ -4,21 +4,21 @@
 #[derive(Debug, Clone)]
 pub struct MiningConfig {
     /// Maximum CPU usage percentage (1-100).
-    pub max_cpu_percentage: u8,
+    pub max_cpu_percentage:    u8,
     /// Run mining at background priority.
-    pub background_priority: bool,
+    pub background_priority:   bool,
     /// Number of mining threads (0 = auto-detect).
-    pub thread_count: usize,
+    pub thread_count:          usize,
     /// Pool URL for stratum connection.
-    pub pool_url: Option<String>,
+    pub pool_url:              Option<String>,
     /// Worker name for pool.
-    pub worker_name: String,
+    pub worker_name:           String,
     /// Enable GPU mining if available.
-    pub gpu_enabled: bool,
+    pub gpu_enabled:           bool,
     /// Minimum hashrate before pausing (0 = no minimum).
-    pub min_hashrate: f64,
+    pub min_hashrate:          f64,
     /// Auto-pause when system is busy.
-    pub auto_pause_on_load: bool,
+    pub auto_pause_on_load:    bool,
     /// CPU temperature threshold for throttling (Celsius).
     pub thermal_throttle_temp: Option<u8>,
 }
@@ -26,14 +26,14 @@ pub struct MiningConfig {
 impl Default for MiningConfig {
     fn default() -> Self {
         Self {
-            max_cpu_percentage: 25, // Conservative default
-            background_priority: true,
-            thread_count: 0, // Auto-detect
-            pool_url: None,
-            worker_name: String::from("essentia_worker"),
-            gpu_enabled: false,
-            min_hashrate: 0.0,
-            auto_pause_on_load: true,
+            max_cpu_percentage:    25, // Conservative default
+            background_priority:   true,
+            thread_count:          0, // Auto-detect
+            pool_url:              None,
+            worker_name:           String::from("essentia_worker"),
+            gpu_enabled:           false,
+            min_hashrate:          0.0,
+            auto_pause_on_load:    true,
             thermal_throttle_temp: Some(80),
         }
     }
@@ -87,7 +87,8 @@ impl MiningConfig {
             self.thread_count.min(available_cores)
         } else {
             // Auto-detect: use percentage of available cores
-            let target = (available_cores as f64 * (self.max_cpu_percentage as f64 / 100.0)) as usize;
+            let target =
+                (available_cores as f64 * (self.max_cpu_percentage as f64 / 100.0)) as usize;
             target.max(1)
         }
     }
