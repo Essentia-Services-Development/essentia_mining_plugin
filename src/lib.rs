@@ -55,6 +55,7 @@
 mod config;
 mod coordinator;
 mod errors;
+pub mod flexforge;
 mod hardware;
 mod plugin;
 mod sha256;
@@ -64,6 +65,7 @@ mod types;
 pub use config::MiningConfig;
 pub use coordinator::MiningCoordinator;
 pub use errors::{MiningError, MiningResult};
+pub use flexforge::{MiningDisplayStats, MiningPluginFlexForge, MiningUiConfig};
 pub use hardware::MiningHardwareProfile;
 pub use plugin::MiningPlugin;
 pub use stratum::{StratumClient, parse_stratum_url};
