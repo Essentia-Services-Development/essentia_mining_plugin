@@ -165,10 +165,10 @@ impl FlexForgeIntegration for MiningPluginFlexForge {
     }
 
     fn on_panel_deactivate(&mut self) {
-        if self.stream_active {
-            if let Some(id) = self.stream_id {
-                let _ = self.stop_stream(id);
-            }
+        if self.stream_active
+            && let Some(id) = self.stream_id
+        {
+            let _ = self.stop_stream(id);
         }
     }
 
