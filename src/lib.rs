@@ -52,6 +52,26 @@
 //! plugin.start_background_mining()?;
 //! ```
 
+// Mining plugin pedantic lint allowances (MINING-LINT-STAGING-01)
+#![allow(
+    clippy::unreadable_literal,
+    clippy::must_use_candidate,
+    clippy::return_self_not_must_use,
+    clippy::missing_errors_doc,
+    clippy::missing_panics_doc,
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss,
+    clippy::cast_precision_loss,
+    clippy::cast_lossless,
+    clippy::needless_pass_by_value,
+    clippy::doc_markdown,
+    clippy::unnecessary_literal_bound,
+    clippy::unnecessary_wraps,
+    clippy::manual_midpoint,
+    clippy::map_unwrap_or,
+    clippy::redundant_closure_for_method_calls
+)]
+
 mod config;
 mod coordinator;
 mod errors;

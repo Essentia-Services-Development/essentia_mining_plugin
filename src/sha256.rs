@@ -2,6 +2,10 @@
 //!
 //! This is a SSOP-compliant implementation using only std library.
 //! No external cryptographic crates are used.
+//!
+//! Note: Single-character variable names (a-h, k, w) follow SHA-256 spec
+//! convention.
+#![allow(clippy::many_single_char_names, clippy::unreadable_literal)]
 
 /// SHA-256 initial hash values (first 32 bits of fractional parts of square
 /// roots of first 8 primes).
