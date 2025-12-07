@@ -1,22 +1,28 @@
 [package]
 name = "essentia_mining_plugin"
-version = "0.1.0"
-edition = "2024"
-authors = ["Essentia Services Development <dev@essentia.services>"]
 description = "Bitcoin/cryptocurrency mining plugin with hardware detection and background processing"
-license = "MIT"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+publish.workspace = true
 repository = "https://github.com/Essentia-Services-Development/essentia_mining_plugin"
-readme = "README.md"
 keywords = ["essentia", "mining", "bitcoin", "cryptocurrency", "plugin"]
 categories = ["cryptography", "asynchronous"]
 
 [dependencies]
-essentia_core = { path = "../../core/essentia_core" }
-essentia_traits = { path = "../../core/essentia_traits" }
-essentia_hwdetect = { path = "../../core/essentia_hwdetect" }
-essentia_async_runtime = { path = "../../core/essentia_async_runtime" }
-essentia_resource_management = { path = "../../services/essentia_resource_management" }
-essentia_plugin_system = { path = "../../core/essentia_plugin_system" }
+# Core dependencies (workspace inheritance)
+essentia_api = { workspace = true }
+essentia_core = { workspace = true }
+essentia_traits = { workspace = true }
+essentia_error = { workspace = true }
+essentia_gpu_accel_kernel = { workspace = true }
+essentia_harness = { workspace = true }
+essentia_consciousness = { workspace = true }
+essentia_hwdetect = { workspace = true }
+essentia_async_runtime = { workspace = true }
+essentia_resource_management = { workspace = true }
+essentia_plugin_system = { workspace = true }
 
 [dev-dependencies]
 
