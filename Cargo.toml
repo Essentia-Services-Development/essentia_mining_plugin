@@ -1,35 +1,36 @@
 [package]
-name = "essentia_mining_plugin"
-description = "Bitcoin/cryptocurrency mining plugin with hardware detection and background processing"
-version.workspace = true
-edition.workspace = true
-authors.workspace = true
-license.workspace = true
-publish.workspace = true
-repository = "https://github.com/Essentia-Services-Development/essentia_mining_plugin"
-keywords = ["essentia", "mining", "bitcoin", "cryptocurrency", "plugin"]
-categories = ["cryptography", "asynchronous"]
+    authors.workspace = true
+    categories        = ["cryptography", "asynchronous"]
+    description       = "Bitcoin/cryptocurrency mining plugin with hardware detection and background processing"
+    edition.workspace = true
+    keywords          = ["essentia", "mining", "bitcoin", "cryptocurrency", "plugin"]
+    license.workspace = true
+    name              = "essentia_mining_plugin"
+    publish.workspace = true
+    repository        = "https://github.com/Essentia-Services-Development/essentia_mining_plugin"
+    version.workspace = true
 
 [dependencies]
-# Core dependencies (workspace inheritance)
-essentia_api = { workspace = true }
-essentia_core = { workspace = true }
-essentia_traits = { workspace = true }
-essentia_error = { workspace = true }
-essentia_gpu_accel_kernel = { workspace = true }
-essentia_harness = { workspace = true }
-essentia_consciousness = { workspace = true }
-essentia_hwdetect = { workspace = true }
-essentia_async_runtime = { workspace = true }
-essentia_resource_management = { workspace = true }
-essentia_plugin_system = { workspace = true }
+    # Core dependencies (workspace inheritance)
+    essentia_api                 = {workspace = true}
+    essentia_async_runtime       = {workspace = true}
+    essentia_consciousness       = {workspace = true}
+    essentia_core                = {workspace = true}
+    essentia_core_utils          = {workspace = true} # CR-164: Canonical crypto functions
+    essentia_error               = {workspace = true}
+    essentia_gpu_accel_kernel    = {workspace = true}
+    essentia_harness             = {workspace = true}
+    essentia_hwdetect            = {workspace = true}
+    essentia_plugin_system       = {workspace = true}
+    essentia_resource_management = {workspace = true}
+    essentia_traits              = {workspace = true}
 
 [dev-dependencies]
 
 [features]
-default = []
-gpu-mining = []
+    default    = []
+    gpu-mining = []
 
 [lib]
-name = "essentia_mining_plugin"
-path = "src/lib.rs"
+    name = "essentia_mining_plugin"
+    path = "src/lib.rs"
