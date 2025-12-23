@@ -75,7 +75,7 @@ impl StratumClient {
     /// Returns `MiningError::PoolConnection` if not connected.
     pub fn get_job(&self) -> MiningResult<Option<MiningJob>> {
         if !self.is_connected() {
-            return Err(MiningError::PoolConnection("Not connected to pool".into()));
+            return Err(MiningError::PoolConnection("Not connected to pool";
         }
 
         // In production, this would return the latest job from mining.notify
@@ -91,7 +91,7 @@ impl StratumClient {
         &self, job_id: &str, extranonce2: &[u8], ntime: u32, nonce: u32,
     ) -> MiningResult<bool> {
         if !self.is_connected() {
-            return Err(MiningError::PoolConnection("Not connected to pool".into()));
+            return Err(MiningError::PoolConnection("Not connected to pool";
         }
 
         // In production, this would:
@@ -125,7 +125,7 @@ pub fn parse_stratum_url(url: &str) -> MiningResult<(String, u16)> {
     let stripped = url
         .strip_prefix("stratum+tcp://")
         .or_else(|| url.strip_prefix("stratum://"))
-        .ok_or_else(|| MiningError::Configuration("Invalid stratum URL prefix".into()))?;
+        .ok_or_else(|| MiningError::Configuration("Invalid stratum URL prefix".into())?;
 
     let parts: Vec<&str> = stripped.split(':').collect();
     if parts.len() != 2 {
@@ -137,7 +137,7 @@ pub fn parse_stratum_url(url: &str) -> MiningResult<(String, u16)> {
     let host = parts[0].to_string();
     let port = parts[1]
         .parse::<u16>()
-        .map_err(|_| MiningError::Configuration("Invalid port number".into()))?;
+        .map_err(|_| MiningError::Configuration("Invalid port number".into())?;
 
     Ok((host, port))
 }
@@ -156,7 +156,7 @@ mod tests {
     fn test_parse_stratum_url() {
         let result = parse_stratum_url("stratum+tcp://pool.example.com:3333");
         assert!(result.is_ok());
-        let (host, port) = result.unwrap();
+        let (host, port) = result.ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
         assert_eq!(host, "pool.example.com");
         assert_eq!(port, 3333);
     }
@@ -173,3 +173,6 @@ mod tests {
         assert!(matches!(client.state(), PoolConnection::Disconnected));
     }
 }
+
+
+

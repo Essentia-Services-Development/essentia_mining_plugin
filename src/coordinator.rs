@@ -53,7 +53,7 @@ impl MiningCoordinator {
     /// Returns `MiningError::Coordinator` if mining is already running.
     pub fn start(&self, job: MiningJob) -> MiningResult<()> {
         if self.running.load(Ordering::SeqCst) {
-            return Err(MiningError::Coordinator("Mining already running".into()));
+            return Err(MiningError::Coordinator("Mining already running";
         }
 
         self.running.store(true, Ordering::SeqCst);
@@ -160,16 +160,17 @@ mod tests {
     #[test]
     fn test_coordinator_not_running_initially() {
         let config = MiningConfig::default();
-        let coordinator = MiningCoordinator::new(config).unwrap();
+        let coordinator = MiningCoordinator::new(config).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
         assert!(!coordinator.is_running());
     }
 
     #[test]
     fn test_stats_initial() {
         let config = MiningConfig::default();
-        let coordinator = MiningCoordinator::new(config).unwrap();
+        let coordinator = MiningCoordinator::new(config).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
         let stats = coordinator.stats();
         assert_eq!(stats.total_hashes, 0);
         assert_eq!(stats.shares_found, 0);
     }
 }
+

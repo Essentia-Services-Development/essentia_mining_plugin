@@ -73,7 +73,7 @@ impl MiningPlugin {
             .config
             .pool_url
             .clone()
-            .ok_or_else(|| MiningError::Configuration("No pool URL configured".into()))?;
+            .ok_or_else(|| MiningError::Configuration("No pool URL configured".into())?;
 
         let mut client = StratumClient::new(pool_url, &self.config.worker_name);
         client.connect()?;
@@ -105,7 +105,7 @@ impl MiningPlugin {
     /// Returns `MiningError::Coordinator` if mining fails to start.
     pub fn start_background_mining(&mut self) -> MiningResult<()> {
         if self.coordinator.is_some() {
-            return Err(MiningError::Coordinator("Mining already active".into()));
+            return Err(MiningError::Coordinator("Mining already active";
         }
 
         let coordinator = MiningCoordinator::new(self.config.clone())?;
@@ -160,7 +160,7 @@ mod tests {
 
     #[test]
     fn test_plugin_not_mining_initially() {
-        let plugin = MiningPlugin::new(MiningConfig::default()).unwrap();
+        let plugin = MiningPlugin::new(MiningConfig::default()).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
         assert!(!plugin.is_mining());
     }
 
@@ -173,17 +173,18 @@ mod tests {
 
     #[test]
     fn test_hardware_profile_access() {
-        let plugin = MiningPlugin::new(MiningConfig::default()).unwrap();
+        let plugin = MiningPlugin::new(MiningConfig::default()).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
         let profile = plugin.hardware_profile();
         assert!(profile.logical_cores > 0);
     }
 
     #[test]
     fn test_pool_not_connected_initially() {
-        let plugin = MiningPlugin::new(MiningConfig::default()).unwrap();
+        let plugin = MiningPlugin::new(MiningConfig::default()).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
         assert!(matches!(
             plugin.pool_connection_state(),
             PoolConnection::Disconnected
         ));
     }
 }
+

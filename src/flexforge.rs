@@ -415,11 +415,11 @@ mod tests {
         panel.config.mining_enabled = true;
         assert!(!panel.is_streaming());
 
-        let id = panel.start_stream().unwrap();
+        let id = panel.start_stream().ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
         assert!(panel.is_streaming());
         assert!(panel.render_frame(id, 500.0));
 
-        panel.stop_stream(id).unwrap();
+        panel.stop_stream(id).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
         assert!(!panel.is_streaming());
         assert!(!panel.render_frame(id, 500.0));
     }
@@ -441,3 +441,5 @@ mod tests {
         assert_eq!(panel.stats.gpu_temp, 68);
     }
 }
+
+

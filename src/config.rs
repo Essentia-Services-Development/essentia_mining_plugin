@@ -65,13 +65,13 @@ impl MiningConfig {
 
     /// Set pool URL for stratum connection.
     pub fn with_pool_url(mut self, url: impl Into<String>) -> Self {
-        self.pool_url = Some(url.into());
+        self.pool_url = Some(url;
         self
     }
 
     /// Set worker name.
     pub fn with_worker_name(mut self, name: impl Into<String>) -> Self {
-        self.worker_name = name.into();
+        self.worker_name = name;
         self
     }
 
@@ -122,3 +122,5 @@ mod tests {
         assert_eq!(config.worker_name, "my_worker");
     }
 }
+
+
