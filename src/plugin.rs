@@ -160,7 +160,7 @@ mod tests {
 
     #[test]
     fn test_plugin_not_mining_initially() {
-        let plugin = MiningPlugin::new(MiningConfig::default()).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
+        let plugin = MiningPlugin::new(MiningConfig::default()).expect("test assertion");
         assert!(!plugin.is_mining());
     }
 
@@ -173,14 +173,14 @@ mod tests {
 
     #[test]
     fn test_hardware_profile_access() {
-        let plugin = MiningPlugin::new(MiningConfig::default()).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
+        let plugin = MiningPlugin::new(MiningConfig::default()).expect("test assertion");
         let profile = plugin.hardware_profile();
         assert!(profile.logical_cores > 0);
     }
 
     #[test]
     fn test_pool_not_connected_initially() {
-        let plugin = MiningPlugin::new(MiningConfig::default()).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
+        let plugin = MiningPlugin::new(MiningConfig::default()).expect("test assertion");
         assert!(matches!(
             plugin.pool_connection_state(),
             PoolConnection::Disconnected

@@ -156,7 +156,7 @@ mod tests {
     fn test_parse_stratum_url() {
         let result = parse_stratum_url("stratum+tcp://pool.example.com:3333");
         assert!(result.is_ok());
-        let (host, port) = result.ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
+        let (host, port) = result.expect("test assertion");
         assert_eq!(host, "pool.example.com");
         assert_eq!(port, 3333);
     }

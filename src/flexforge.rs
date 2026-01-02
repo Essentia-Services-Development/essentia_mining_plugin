@@ -415,11 +415,11 @@ mod tests {
         panel.config.mining_enabled = true;
         assert!(!panel.is_streaming());
 
-        let id = panel.start_stream().ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
+        let id = panel.start_stream().expect("test assertion");
         assert!(panel.is_streaming());
         assert!(panel.render_frame(id, 500.0));
 
-        panel.stop_stream(id).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
+        panel.stop_stream(id).expect("test assertion");
         assert!(!panel.is_streaming());
         assert!(!panel.render_frame(id, 500.0));
     }

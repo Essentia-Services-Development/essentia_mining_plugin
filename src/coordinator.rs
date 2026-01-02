@@ -160,14 +160,14 @@ mod tests {
     #[test]
     fn test_coordinator_not_running_initially() {
         let config = MiningConfig::default();
-        let coordinator = MiningCoordinator::new(config).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
+        let coordinator = MiningCoordinator::new(config).expect("test assertion");
         assert!(!coordinator.is_running());
     }
 
     #[test]
     fn test_stats_initial() {
         let config = MiningConfig::default();
-        let coordinator = MiningCoordinator::new(config).ok_or_else(|| EssentiaError::invalid_state("unwrap replaced"))?;
+        let coordinator = MiningCoordinator::new(config).expect("test assertion");
         let stats = coordinator.stats();
         assert_eq!(stats.total_hashes, 0);
         assert_eq!(stats.shares_found, 0);
