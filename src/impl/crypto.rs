@@ -1,4 +1,4 @@
-//! SHA-256 re-export from canonical `essentia_core_utils::crypto` module.
+//! Crypto re-exports from canonical `essentia_core_utils::crypto` module.
 //!
 //! CR-164: Hash Function Canonicalization
 //! This module re-exports SHA-256 primitives from the canonical source,
@@ -9,11 +9,11 @@
 //!
 //! ## Usage
 //! ```rust,ignore
-//! use essentia_mining_plugin::sha256::{sha256, double_sha256, Sha256};
+//! use essentia_mining_plugin::r#impl::{sha256, double_sha256, Sha256};
 //!
 //! let hash = sha256(b"data");
 //! let bitcoin_hash = double_sha256(b"block_header");
 //! ```
 
 // Re-export canonical SHA-256 implementation
-pub use essentia_core_utils::crypto::{Sha256, double_sha256, sha256, sha256_hex};
+pub use essentia_core_utils::crypto::{double_sha256, sha256, sha256_hex, Sha256};

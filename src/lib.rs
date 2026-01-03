@@ -72,23 +72,23 @@
     clippy::redundant_closure_for_method_calls
 )]
 
-mod config;
-mod coordinator;
-mod errors;
-pub mod flexforge;
-mod hardware;
-mod plugin;
-mod sha256;
-mod stratum;
-mod types;
+// EMD Module Structure
+pub mod errors;
+pub mod r#impl;
+pub mod traits;
+pub mod types;
 
-pub use config::MiningConfig;
-pub use coordinator::MiningCoordinator;
+// Root-level modules (FlexForge integration)
+pub mod flexforge;
+
+// Re-export primary types for convenience
 pub use errors::{MiningError, MiningResult};
 pub use flexforge::{MiningDisplayStats, MiningPluginFlexForge, MiningUiConfig};
-pub use hardware::MiningHardwareProfile;
-pub use plugin::MiningPlugin;
-pub use stratum::{StratumClient, parse_stratum_url};
+pub use r#impl::{
+    MiningConfig, MiningCoordinator, MiningHardwareProfile, MiningPlugin, Sha256, StratumClient,
+    double_sha256, parse_stratum_url, sha256, sha256_hex,
+};
+pub use traits::{MiningCoordinatorTrait, MiningHardwareTrait, PoolClientTrait};
 pub use types::{BlockHeader, HashTarget, MiningJob, MiningStats, Nonce, PoolConnection};
 
 #[cfg(test)]
