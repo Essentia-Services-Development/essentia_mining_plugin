@@ -1,6 +1,5 @@
 //! Crypto re-exports from canonical `essentia_core_utils::crypto` module.
 //!
-//! CR-164: Hash Function Canonicalization
 //! This module re-exports SHA-256 primitives from the canonical source,
 //! eliminating code duplication while maintaining API compatibility.
 //!
