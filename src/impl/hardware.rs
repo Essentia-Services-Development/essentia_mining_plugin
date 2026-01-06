@@ -3,8 +3,7 @@
 //! This module integrates with `essentia_hwdetect` to determine optimal
 //! mining parameters based on available hardware capabilities.
 
-use crate::errors::MiningResult;
-use crate::traits::MiningHardwareTrait;
+use crate::{errors::MiningResult, traits::MiningHardwareTrait};
 
 /// Hardware profile for mining optimization.
 #[derive(Debug, Clone)]

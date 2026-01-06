@@ -16,4 +16,4 @@
 //! ```
 
 // Re-export canonical SHA-256 implementation
-pub use essentia_core_utils::crypto::{double_sha256, sha256, sha256_hex, Sha256};
+pub use essentia_core_utils::crypto::{Sha256, double_sha256, sha256, sha256_hex};

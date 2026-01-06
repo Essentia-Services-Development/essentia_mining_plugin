@@ -441,5 +441,3 @@ mod tests {
         assert_eq!(panel.stats.gpu_temp, 68);
     }
 }
-
-

@@ -108,6 +108,8 @@ impl MiningCoordinatorTrait for MiningCoordinator {
             let header = job.header.clone();
             let target = job.target.clone();
 
+            // SSOP-EXEMPT(std::thread): Mining uses CPU-intensive threads for SHA256 hashing;
+            // async runtime not suitable for compute-bound work
             std::thread::spawn(move || {
                 Self::mining_thread(
                     running,

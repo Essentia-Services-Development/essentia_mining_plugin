@@ -16,7 +16,7 @@ mod stratum;
 
 pub use config::MiningConfig;
 pub use coordinator::MiningCoordinator;
-pub use crypto::{double_sha256, sha256, sha256_hex, Sha256};
+pub use crypto::{Sha256, double_sha256, sha256, sha256_hex};
 pub use hardware::MiningHardwareProfile;
 pub use plugin::MiningPlugin;
-pub use stratum::{parse_stratum_url, StratumClient};
+pub use stratum::{StratumClient, parse_stratum_url};

@@ -7,6 +7,4 @@
 
 mod core;
 
-pub use core::{
-    BlockHeader, HashTarget, MiningJob, MiningStats, Nonce, PoolConnection,
-};
+pub use core::{BlockHeader, HashTarget, MiningJob, MiningStats, Nonce, PoolConnection};
