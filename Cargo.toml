@@ -6,8 +6,9 @@
     keywords          = ["essentia", "mining", "bitcoin", "cryptocurrency", "plugin"]
     license.workspace = true
     name              = "essentia_mining_plugin"
+    repository    = {workspace = true}
+    readme        = {workspace = true}
     publish.workspace = true
-    repository        = "https://github.com/Essentia-Services-Development/essentia_mining_plugin"
     version.workspace = true
 
 [dependencies]
@@ -24,13 +25,9 @@
     essentia_plugin_system       = {workspace = true}
     essentia_resource_management = {workspace = true}
     essentia_traits              = {workspace = true}
-
 [dev-dependencies]
-
 [features]
     default    = []
     gpu-mining = []
-
 [lib]
-    name = "essentia_mining_plugin"
     path = "src/lib.rs"

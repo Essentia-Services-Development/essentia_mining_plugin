@@ -110,7 +110,8 @@ impl MiningCoordinatorTrait for MiningCoordinator {
 
             // SSOP-EXEMPT(std::thread): Mining uses CPU-intensive threads for SHA256 hashing;
             // async runtime not suitable for compute-bound work
-            std::thread::spawn(move || {
+            #[allow(clippy::let_underscore_future)]
+            let _ = essentia_async_runtime::spawn(async move {
                 Self::mining_thread(
                     running,
                     total_hashes,
