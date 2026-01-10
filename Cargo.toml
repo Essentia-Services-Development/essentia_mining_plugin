@@ -31,3 +31,4 @@
     gpu-mining = []
 [lib]
     path = "src/lib.rs"
+
