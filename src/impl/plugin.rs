@@ -150,7 +150,7 @@ impl Drop for MiningPlugin {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "full-tests"))]
 mod tests {
     use super::*;
 

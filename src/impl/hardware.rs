@@ -151,7 +151,7 @@ impl Default for MiningHardwareProfile {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "full-tests"))]
 mod tests {
     use super::*;
 

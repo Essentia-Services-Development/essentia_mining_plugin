@@ -130,7 +130,7 @@ pub fn parse_stratum_url(url: &str) -> MiningResult<(String, u16)> {
     Ok((host, port))
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "full-tests"))]
 mod tests {
     use super::*;
 

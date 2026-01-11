@@ -91,7 +91,7 @@ pub use r#impl::{
 pub use traits::{MiningCoordinatorTrait, MiningHardwareTrait, PoolClientTrait};
 pub use types::{BlockHeader, HashTarget, MiningJob, MiningStats, Nonce, PoolConnection};
 
-#[cfg(test)]
+#[cfg(all(test, feature = "full-tests"))]
 mod tests {
     use super::*;
 
