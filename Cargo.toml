@@ -27,6 +27,7 @@
     essentia_traits              = {workspace = true}
 [dev-dependencies]
 [features]
+full-tests = []
     default    = []
     gpu-mining = []
 [lib]
